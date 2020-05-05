@@ -66,7 +66,7 @@ router.get('/', async function(req, res, next){
 
     if(isValidKey(req.headers)) {
 
-        let searchAddr = req.headers['myaddr'];
+        let searchAddr = req.headers['given_address'];
         coordsParams.singleLine = searchAddr;
         await request(getCoordsURL, {authentication, params: coordsParams}).then((r) => {
             thisXcoord = r.candidates[0].location.x;

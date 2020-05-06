@@ -68,7 +68,6 @@ router.get('/find-nearest/', async function(req, res, next){
     //if(isValidKey(req.headers)) {
 
         let searchAddr = req.fields['address'];
-        searchAddr.replace(/,/g, " ");
         coordsParams.singleLine = searchAddr;
         console.log(coordsParams.singleLine);
         await request(getCoordsURL, {authentication, params: coordsParams}).then(async function(r){

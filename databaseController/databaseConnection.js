@@ -24,10 +24,10 @@ exports.testCon = function(){
 };
 
 
-exports.getNodeFromNodeID = function(node_id){
-    con.query(`SELECT * FROM t_nodes WHERE NEIGHTBORHOOD_ID = ${node_id};`, function (err, result) {
+exports.getNodeFromNeighborID = function(node_id, res){
+    con.query(`SELECT * FROM t_nodes WHERE NEIGHBORHOOD_ID = "${node_id}" ;`, function (err, result) {
         if (err) throw err;
-        return result;
+        res.send(JSON.stringify(result));
     });
 };
 

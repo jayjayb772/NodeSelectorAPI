@@ -9,6 +9,7 @@ const usersRouter = require('./routes/users');
 const nodeSelectRouter = require('./routes/nodeSelector');
 const getCoordsToFile = require('./routes/getCoordsToFile');
 const addNode = require('./routes/addNode');
+const findNode = require('./routes/findNode');
 
 
 const app = express();
@@ -28,6 +29,7 @@ app.use('/users', usersRouter);
 app.use('/node-selector', nodeSelectRouter);
 app.use('/csv-to-db', getCoordsToFile);
 app.use('/post-new-node', addNode);
+app.use('/find-node', findNode);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

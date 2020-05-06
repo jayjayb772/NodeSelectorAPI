@@ -16,7 +16,7 @@ const authentication = new ApplicationSession({
 });
 
 
-exports.getCoordsFromAddr = async function(req,res){
+exports.getCoordsFromAddrAndAddToDB = async function(req,res){
     coordsParams.singleLine = req.body.Address;
     request(getCoordsURL, {authentication, params: coordsParams}).then((r) => {
 

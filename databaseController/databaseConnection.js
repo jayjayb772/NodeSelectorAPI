@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const express = require('express');
+const {formatQueryReturnHTML} = require("../routes/formatQuery");
 const router = express.Router();
 const con = mysql.createConnection({
     host: `${process.env.DB_HOST}`,
@@ -33,7 +34,7 @@ exports.getNodeFromNeighborID = function(node_id, res){
 
 
 
-exports.findNearestNode = async function(x,y, res){
+exports.findNearestNode = async function(x,y, res, addr){
     let nodeResponse = '';
     let dist = 100;
     con.query("SELECT * FROM t_nodes", function(err, result){
@@ -51,11 +52,12 @@ exports.findNearestNode = async function(x,y, res){
            // console.log("dist to best:" + dist);
            if(tempDist < dist){
                nodeResponse = `${JSON.stringify(result[i])}`;
+               console.log(nodeResponse);
                dist = tempDist;
            }
        }
        //console.log(nodeResponse);
-       res.send(nodeResponse);
+       formatQueryReturnHTML(nodeResponse, res, addr);
 
 
     });
@@ -82,4 +84,13 @@ exports.getAllNodes = function(res){
         res.send(result);
 
     });
+};
+
+
+exports.deleteNodeByID = function(neighborhood_id, res){
+    con.query(`DELETE FROM t_nodes WHERE NEIGHBORHOOD_ID = '${neighborhood_id}'`, function(err, result){
+        if(err) throw err;
+        console.log(result);
+        res.send(Response.ok);
+    })
 };

@@ -1,7 +1,7 @@
 <html>
 <body>
 <style>
-    .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+    .hide { border:none;  }
 
 </style>
 <div style="text-align: center; font-family: Calibri;">
@@ -9,13 +9,13 @@
 
 
     <form action="https://node-finder-api.herokuapp.com/node-selector/find-nearest" id="form" target="hiddenFrame" method="get" enctype="multipart/form-data">
-        <label for="address">Address:</label><br>
-        <input type="text" id="address" name="address" size=40><br>
-        <input type="submit" class="submit"  value="Find Nearest Node" onclick="document.getElementById('form').hidden = true;">
+        <label for="address">Address:<br>Please include Street Address, City, and State</label><br>
+        <input type="text" id="address" name="address" size=40><br><br>
+        <input type="submit" class="submit"  value="Find Nearest Node" onclick="document.getElementById('form').hidden = true; document.getElementById('label').hidden = false;">
         <output name="closestNode" for="address"></output>
     </form>
-    <lable for="hiddenFrame">Nearest Node Info</lable><br>
-    <iframe name="hiddenFrame" id="hiddenFrame" length="200" width="300"></iframe>
+    <lable for="hiddenFrame" hidden="false" id="label" >Nearest Node Info</lable><br>
+    <iframe name="hiddenFrame" id="hiddenFrame" height="250" width="425" class="hide"></iframe>
 </div>
 </body>
 </html>

@@ -27,6 +27,7 @@ function buildHtml(query, addr){
         + `Node Name: ${query["NODE_NAME"]}<br>`
         + `Primary Contact: ${query["PRIMARY_CONTACT"]}<br>`
         + `Phone number: ${query["PHONE"]}<br>`
+        + `Email: ${query["PHONE"]}<br>`
         +'</body></html>';
     return htmlDoc;
 }

@@ -20,9 +20,10 @@ exports.formatMultipleElements = function(queries, res){
 
 function buildHtml(query, addr){
     let htmlDoc = '<!DOCTYPE html>'
-    + '<html><head>';
+        +'<style>body {font-size: 150%}</style>'
+    + '<html><h1>';
     htmlDoc+=`Your Address: ${addr}`;
-    htmlDoc+= '</head><body>';
+    htmlDoc+= '<h1><br><body>';
     htmlDoc+= `Closest Node: ${query["NEIGHBORHOOD_ID"]}<br>`
         + `Node Name: ${query["NODE_NAME"]}<br>`
         + `Primary Contact: ${query["PRIMARY_CONTACT"]}<br>`

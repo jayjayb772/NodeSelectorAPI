@@ -5,7 +5,8 @@ require("isomorphic-form-data");
 const req = require('request');
 const { request } = require("@esri/arcgis-rest-request");
 const { ApplicationSession } = require("@esri/arcgis-rest-auth");
-const {isValidKey} = require('./apiKeyCheck.js');
+const {isValidKey} = require('../utils/apiKeyCheck.js');
+const {getAllNodes,findNearestNode} = require('../databaseController/databaseConnection.js');
 
 const parse = require('csv-parse');
 const fs = require('fs');
@@ -62,16 +63,16 @@ let coordsParams = {
 
 
 let thisXcoord, thisYcoord;
-router.get('/', async function(req, res, next){
+router.get('/find-nearest/', async function(req, res, next){
 
     if(isValidKey(req.headers)) {
 
         let searchAddr = req.headers['given_address'];
         coordsParams.singleLine = searchAddr;
-        await request(getCoordsURL, {authentication, params: coordsParams}).then((r) => {
+        await request(getCoordsURL, {authentication, params: coordsParams}).then(async function(r){
             thisXcoord = r.candidates[0].location.x;
             thisYcoord = r.candidates[0].location.y;
-            res.send(findNearNode(thisXcoord, thisYcoord));
+            let nearest = await findNearestNode(thisXcoord, thisYcoord, res);
         }).catch((err) => {
             console.log(err);
         });
@@ -82,20 +83,15 @@ router.get('/', async function(req, res, next){
     }
 });
 
-function findNearNode(x, y){
-    let closest = '';
-    let dist = 10;
-    for( let i = 0; i<nodes.length; i++){
-        let tempDist =  Math.abs(Math.sqrt(((parseFloat(nodes[i].Xcoord)-parseFloat(x))*(parseFloat(nodes[i].Xcoord)-parseFloat(x)))+((parseFloat(nodes[i].Ycoord)-parseFloat(y))*(parseFloat(nodes[i].Ycoord)-parseFloat(y)))));
-        //console.log(tempDist);
-        if(tempDist < dist){
-            closest = `${nodes[i].Node_Name}, ${nodes[i].Address}\n Primary Contact ${nodes[i].Primary_Contact}`;
-            dist = tempDist;
-        }
-        //console.log(`cur node: ${nodes[i].Node_Name}, dist: ${dist}, cur closest:${closest}`)
+
+router.get('/list-all', function(req, res, next){
+    if(isValidKey(req.headers)) {
+        getAllNodes(res);
+    }else{
+        res.send('Invalid api key?')
     }
-    return `Nearest node is ${closest}`;
-}
+});
+
 
 
 

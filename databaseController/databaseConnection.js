@@ -69,7 +69,7 @@ exports.findNearestNode = async function(x,y, res, addr){
 
 
 exports.addNodeToDatabase = function(node, options){
-    con.query(`INSERT INTO t_nodes (NEIGHBORHOOD_ID, NODE_NAME, PRIMARY_CONTACT, ADDRESS, PHONE, EMAIL, X_COORD, Y_COORD) VALUES (\"${node.neighborhood_id}\", \"${node.node_name}\", \"${node.primary_contact}\", \"${node.address}\", \"${node.phone}\", \"${node.email}\", \"${node.x_coord}\", \"${node.y_coord}\");`, function (err, result) {
+    con.query(`INSERT INTO t_nodes (NEIGHBORHOOD_ID, NODE_NAME, PRIMARY_CONTACT, ADDRESS, PHONE, EMAIL, X_COORD, Y_COORD) SELECT "${node.neighborhood_id}", "${node.node_name}", "${node.primary_contact}", "${node.address}", "${node.phone}", "${node.email}", "${node.x_coord}", "${node.y_coord}" FROM dual WHERE NOT EXISTS(SELECT 1 FROM t_nodes WHERE NEIGHBORHOOD_ID = "${node.neighborhood_id}");`, function (err, result) {
         if (err) throw err;
         //console.log(`Added ${node.neighborhood_id} to db`);
         if(options.res) options.res.send(`Added ${node.neighborhood_id} to db`);

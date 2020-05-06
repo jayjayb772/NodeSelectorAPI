@@ -27,7 +27,7 @@ function buildHtml(query, addr){
         + `Node Name: ${query["NODE_NAME"]}<br>`
         + `Primary Contact: ${query["PRIMARY_CONTACT"]}<br>`
         + `Phone number: ${query["PHONE"]}<br>`
-        + `Email:<a href="${query["EMAIL"]}">${query["EMAIL"]}</a><br>`
+        + `Email:<a href="mailto:${query["EMAIL"]}">${query["EMAIL"]}</a><br>`
         +'</body></html>';
     return htmlDoc;
 }

@@ -69,7 +69,7 @@ router.get('/find-nearest/', async function(req, res, next){
 
         let searchAddr = req.fields['address'];
         coordsParams.singleLine = searchAddr;
-        console.log(coordsParams.singleLine);
+        console.log(req.fields);
         await request(getCoordsURL, {authentication, params: coordsParams}).then(async function(r){
             console.log(r)
             thisXcoord = r.candidates[0].location.x;

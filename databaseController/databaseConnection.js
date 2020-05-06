@@ -45,16 +45,16 @@ exports.findNearestNode = async function(x,y, res){
            let ys = parseFloat(result[i].Y_COORD) - parseFloat(y);
            let ySquared = ys*ys;
            let tempDist =  Math.abs(Math.sqrt(xSquared+ySquared));        //console.log(tempDist);
-           console.log("\n\nCur node:" + result[i].NODE_NAME);
-           console.log("cur best: " + nodeResponse);
-           console.log("dist to cut:" + tempDist);
-           console.log("dist to best:" + dist);
+           // console.log("\n\nCur node:" + result[i].NODE_NAME);
+           // console.log("cur best: " + nodeResponse);
+           // console.log("dist to cut:" + tempDist);
+           // console.log("dist to best:" + dist);
            if(tempDist < dist){
                nodeResponse = `${JSON.stringify(result[i])}`;
                dist = tempDist;
            }
        }
-       console.log(nodeResponse);
+       //console.log(nodeResponse);
        res.send(nodeResponse);
 
 

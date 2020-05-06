@@ -902,5 +902,46 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
+    <table id="226" parent="3" name="t_nodes"/>
+    <column id="227" parent="226" name="NEIGHBORHOOD_ID">
+      <Position>1</Position>
+      <DataType>varchar(75)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="228" parent="226" name="NODE_NAME">
+      <Position>2</Position>
+      <DataType>varchar(75)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="229" parent="226" name="PRIMARY_CONTACT">
+      <Position>3</Position>
+      <DataType>varchar(35)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="230" parent="226" name="ADDRESS">
+      <Position>4</Position>
+      <DataType>varchar(65)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="231" parent="226" name="PHONE">
+      <Position>5</Position>
+      <DataType>varchar(15)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="232" parent="226" name="EMAIL">
+      <Position>6</Position>
+      <DataType>varchar(30)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="233" parent="226" name="X_COORD">
+      <Position>7</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="234" parent="226" name="Y_COORD">
+      <Position>8</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
   </database-model>
 </dataSource>

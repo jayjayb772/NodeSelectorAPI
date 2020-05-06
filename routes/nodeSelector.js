@@ -65,9 +65,9 @@ let coordsParams = {
 let thisXcoord, thisYcoord;
 router.get('/find-nearest/', async function(req, res, next){
 
-    if(isValidKey(req.headers)) {
+    //if(isValidKey(req.headers)) {
 
-        let searchAddr = req.headers['given_address'];
+        let searchAddr = req.fields['address'];
         coordsParams.singleLine = searchAddr;
         await request(getCoordsURL, {authentication, params: coordsParams}).then(async function(r){
             thisXcoord = r.candidates[0].location.x;
@@ -78,9 +78,10 @@ router.get('/find-nearest/', async function(req, res, next){
         });
 
 
-    }else{
-        res.send('Invalid API key');
-    }
+
+    //}else{
+     //   res.send('Invalid API key');
+   // }
 });
 
 

@@ -10,10 +10,11 @@ const nodeSelectRouter = require('./routes/nodeSelector');
 const getCoordsToFile = require('./routes/getCoordsToFile');
 const addNode = require('./routes/addNode');
 const findNode = require('./routes/findNode');
+const formidable = require('express-formidable');
 
 
 const app = express();
-
+app.use(formidable());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

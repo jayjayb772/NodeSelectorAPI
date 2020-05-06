@@ -2,8 +2,27 @@
 <body>
 <style>
     .hide { border:none;  }
-
+    .resetButton {display: inline; width: auto; height: auto; visibility: hidden}
+    .label {visibility: hidden}
 </style>
+
+<script type="text/javascript" id="resetForm">
+    function resetForm() {
+        document.getElementById('form').reset();
+        // document.getElementById('form').style.visibility = 'visible';
+        document.getElementById('form').hidden = false;
+        document.getElementById('hiddenFrame').src = "";
+        document.getElementById('resetButton').style.visibility = 'hidden';
+        document.getElementById('label').style.visibility = 'hidden';
+    }
+
+    function showNode(){
+        // document.getElementById('form').style.visibility = 'hidden';
+        document.getElementById('form').hidden = true;
+        document.getElementById('label').style.visibility = 'visible';
+        document.getElementById('resetButton').style.visibility = 'visible';
+    }
+</script>
 <div style="text-align: center; font-family: Calibri;">
 
 
@@ -11,11 +30,15 @@
     <form action="https://node-finder-api.herokuapp.com/node-selector/find-nearest" id="form" target="hiddenFrame" method="get" enctype="multipart/form-data">
         <label for="address">Address:<br>Please include Street Address, City, and State</label><br>
         <input type="text" id="address" name="address" size=40><br><br>
-        <input type="submit" class="submit"  value="Find Nearest Node" onclick="document.getElementById('form').hidden = true; document.getElementById('label').hidden = false;">
+        <input type="submit" class="submit"  value="Find Nearest Node" onclick="showNode()">
         <output name="closestNode" for="address"></output>
     </form>
-    <lable for="hiddenFrame" hidden="false" id="label" >Nearest Node Info</lable><br>
+    <lable for="hiddenFrame" id="label" class="label">Nearest Node Info</lable><br>
     <iframe name="hiddenFrame" id="hiddenFrame" height="250" width="425" class="hide"></iframe>
+    <br>
+    <br>
+    <input type="submit" class="resetButton" id="resetButton" value="Reset" onclick="resetForm()">
+
 </div>
 </body>
 </html>

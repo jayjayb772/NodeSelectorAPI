@@ -19,7 +19,7 @@ con.connect(function(err) {
 exports.testCon = function(){
     con.query("SELECT * FROM t_nodes", function (err, result) {
         if (err) throw err;
-        console.log("Result: " + result);
+        //console.log("Result: " + result);
     });
 
 };
@@ -52,7 +52,7 @@ exports.findNearestNode = async function(x,y, res, addr){
            // console.log("dist to best:" + dist);
            if(tempDist < dist){
                nodeResponse = `${JSON.stringify(result[i])}`;
-               console.log(nodeResponse);
+               //console.log(nodeResponse);
                dist = tempDist;
            }
        }
@@ -71,7 +71,7 @@ exports.findNearestNode = async function(x,y, res, addr){
 exports.addNodeToDatabase = function(node, options){
     con.query(`INSERT INTO t_nodes (NEIGHBORHOOD_ID, NODE_NAME, PRIMARY_CONTACT, ADDRESS, PHONE, EMAIL, X_COORD, Y_COORD) VALUES (\"${node.neighborhood_id}\", \"${node.node_name}\", \"${node.primary_contact}\", \"${node.address}\", \"${node.phone}\", \"${node.email}\", \"${node.x_coord}\", \"${node.y_coord}\");`, function (err, result) {
         if (err) throw err;
-        console.log(`Added ${node.neighborhood_id} to db`);
+        //console.log(`Added ${node.neighborhood_id} to db`);
         if(options.res) options.res.send(`Added ${node.neighborhood_id} to db`);
         //console.log("Result: " + result);
     });
@@ -80,7 +80,7 @@ exports.addNodeToDatabase = function(node, options){
 exports.getAllNodes = function(res){
     con.query("SELECT * FROM t_nodes;", function (err, result) {
         if (err) throw err;
-        console.log(JSON.stringify(result));
+        //console.log(JSON.stringify(result));
         res.send(result);
 
     });
@@ -90,7 +90,7 @@ exports.getAllNodes = function(res){
 exports.deleteNodeByID = function(neighborhood_id, res){
     con.query(`DELETE FROM t_nodes WHERE NEIGHBORHOOD_ID = '${neighborhood_id}'`, function(err, result){
         if(err) throw err;
-        console.log(result);
+        //console.log(result);
         res.send(Response.ok);
     })
 };

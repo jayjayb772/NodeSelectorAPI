@@ -16,24 +16,29 @@ const authentication = new ApplicationSession({
 });
 
 
-exports.getCoordsFromAddrAndAddToDB = async function(req,res){
-    coordsParams.singleLine = req.body.Address;
-    request(getCoordsURL, {authentication, params: coordsParams}).then((r) => {
-
+exports.getCoordsFromAddrAndAddToDB = async function(req,addr){
+    return new Promise(function(fulfill, reject){
+    coordsParams.singleLine = req.fields.Address;
+    request(getCoordsURL, {authentication, params: coordsParams}).then(async function(r){
+        console.log(r);
         let node = {
-            "neighborhood_id": req.body.Neighbor_ID
-            , "node_name": req.body.Node_Name
-            , "primary_contact": req.body.Primary_Contact
-            , "address": req.body.Address
-            , "phone": req.body.Phone
-            , "email": req.body.Email
+            "neighborhood_id": req.fields.Neighbor_ID
+            , "node_name": req.fields.Node_Name
+            , "primary_contact": req.fields.Primary_Contact
+            , "address": req.fields.Address
+            , "phone": req.fields.Phone
+            , "email": req.fields.Email
             , "x_coord": r.candidates[0].location.x
             , "y_coord": r.candidates[0].location.y
         };
         console.log(node);
-        addNodeToDatabase(node);
-
+        let added = await addNodeToDatabase(node);
+        if(added === true){
+            fulfill(true);
+        }
     });
+    });
+
 };
 
 exports.getCoordsFromAddr = async function(addr){

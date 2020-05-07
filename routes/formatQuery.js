@@ -1,17 +1,10 @@
 
 
-exports.formatQueryReturnHTML = function(query, res, addr){
-    console.log();
+exports.formatQueryReturnHTML = function(query, addr){
+    return new Promise(function(fulfill, reject){
     let html = buildHtml(JSON.parse(query), addr);
-
-
-
-    res.writeHead(200, {
-        'Content-Type': 'text/html',
-        'Content-Length': html.length,
-        'Expires': new Date().toUTCString()
-    });
-    res.end(html);
+    fulfill(html);
+    })
 };
 
 exports.formatMultipleElements = function(queries, res){

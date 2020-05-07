@@ -8,9 +8,9 @@ const { ApplicationSession } = require("@esri/arcgis-rest-auth");
 const {isValidKey} = require('../utils/apiKeyCheck.js');
 const {getAllNodes,findNearestNode} = require('../databaseController/databaseConnection.js');
 
-const parse = require('csv-parse');
-const fs = require('fs');
-
+//const parse = require('csv-parse');
+//const fs = require('fs');
+/*
 let nodeFile = './routes/out.csv';
 const nodes = [];
 
@@ -33,6 +33,8 @@ function initNodes() {
 initNodes();
 
 
+
+ */
 
 
 
@@ -67,7 +69,7 @@ router.get('/find-nearest/', async function(req, res, next){
 
     //if(isValidKey(req.headers)) {
 
-        let searchAddr = req.query['address'];
+        let searchAddr = req.fields['address'];
         coordsParams.singleLine = searchAddr;
         //console.log(req.query);
         //console.log(coordsParams.singleLine);
@@ -76,12 +78,17 @@ router.get('/find-nearest/', async function(req, res, next){
             //console.log(r);
             thisXcoord = r.candidates[0].location.x;
             thisYcoord = r.candidates[0].location.y;
-            await findNearestNode(thisXcoord, thisYcoord, res, searchAddr);
+            let nearest = await findNearestNode(thisXcoord, thisYcoord, searchAddr);
+
+            res.status(200).send(nearest);
+
         }).catch((err) => {
             console.log(err);
 
-            res.send("Could not find coordinates");
+            res.status(400).send("Could not find coordinates");
         });
+
+
 
 
 

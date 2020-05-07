@@ -38,11 +38,14 @@ exports.getNodeFromNeighborID = function(node_id){
 
 
 
-exports.findNearestNode = async function(x,y, res, addr){
+exports.findNearestNode = async function(x,y, addr){
+    return new Promise(function(fulfill, reject){
+
+
     let nodeResponse = '';
     let dist = 100;
     con.query("SELECT * FROM t_nodes", function(err, result){
-       if(err) throw err;
+       if(err) reject(err);
 
        for(let i = 0; i<result.length; i++){
            let xs = parseFloat(result[i].X_COORD) - parseFloat(x);
@@ -61,11 +64,13 @@ exports.findNearestNode = async function(x,y, res, addr){
            }
        }
        //console.log(nodeResponse);
-       formatQueryReturnHTML(nodeResponse, res, addr);
+       fulfill(formatQueryReturnHTML(nodeResponse, addr));
 
 
     });
 
+
+    });
 };
 
 
@@ -75,9 +80,9 @@ exports.findNearestNode = async function(x,y, res, addr){
 exports.addNodeToDatabase = function(node){
     return new Promise(function(fulfill, reject){
     con.query(`INSERT INTO t_nodes (NEIGHBORHOOD_ID, NODE_NAME, PRIMARY_CONTACT, ADDRESS, PHONE, EMAIL, X_COORD, Y_COORD) SELECT "${node.neighborhood_id}", "${node.node_name}", "${node.primary_contact}", "${node.address}", "${node.phone}", "${node.email}", "${node.x_coord}", "${node.y_coord}" FROM dual WHERE NOT EXISTS(SELECT 1 FROM t_nodes WHERE NEIGHBORHOOD_ID = "${node.neighborhood_id}");`, function (err, result) {
-        if (err) throw err;
+        if (err) reject(err);
         //console.log(`Added ${node.neighborhood_id} to db`);
-        return fulfill();
+        fulfill(true);
         //console.log("Result: " + result);
     });
     });

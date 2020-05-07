@@ -65,7 +65,7 @@ let coordsParams = {
 
 
 let thisXcoord, thisYcoord;
-router.get('/find-nearest/', async function(req, res, next){
+router.post('/find-nearest/', async function(req, res, next){
 
     //if(isValidKey(req.headers)) {
 

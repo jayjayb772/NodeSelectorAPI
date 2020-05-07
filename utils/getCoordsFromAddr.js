@@ -31,7 +31,17 @@ exports.getCoordsFromAddrAndAddToDB = async function(req,res){
             , "y_coord": r.candidates[0].location.y
         };
         console.log(node);
-        addNodeToDatabase(node, {res:res});
+        addNodeToDatabase(node);
 
     });
+};
+
+exports.getCoordsFromAddr = async function(addr){
+    return new Promise(function(fulfill, reject){
+        coordsParams.singleLine = addr;
+        request(getCoordsURL, {authentication:authentication, params:coordsParams}).then((res)=>{
+            let coords = [res.candidates[0].location.x, res.candidates[0].location.y];
+            return fulfill(coords);
+        })
+    })
 };

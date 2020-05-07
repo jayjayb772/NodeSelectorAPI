@@ -8,6 +8,7 @@
   "dependencies": {
     "@esri/arcgis-rest-auth": "^2.12.1",
     "@esri/arcgis-rest-request": "^2.12.1",
+    "@mapbox/mapbox-sdk": "^0.10.0",
     "cookie-parser": "~1.4.4",
     "cross-fetch": "^3.0.4",
     "csv": "^5.3.2",
@@ -19,6 +20,8 @@
     "express-formidable": "^1.2.0",
     "http-errors": "~1.6.3",
     "isomorphic-form-data": "^2.0.0",
+    "mapbox": "^1.0.0-beta10",
+    "mapbox-gl": "^1.10.0",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "pug": "^2.0.4",

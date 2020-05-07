@@ -7,7 +7,8 @@ const {getNodeFromNeighborID}= require('../databaseController/databaseConnection
 
 router.get('/by-neighborhood-id', function(req, res, next){
     if(isValidKey(req.headers)) {
-        getNodeFromNeighborID(req.headers['neighborhood_id'], res);
+        let node = getNodeFromNeighborID(req.headers['neighborhood_id']);
+        res.send(JSON.stringify(node));
     }
 });
 

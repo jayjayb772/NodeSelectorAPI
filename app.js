@@ -10,6 +10,7 @@ const nodeSelectRouter = require('./routes/nodeSelector');
 const getCoordsToFile = require('./routes/getCoordsToFile');
 const addNode = require('./routes/addNode');
 const findNode = require('./routes/findNode');
+const devEnd = require('./routes/devEndpoints/devMapboxEndpoint');
 const formidable = require('express-formidable');
 
 
@@ -31,6 +32,7 @@ app.use('/node-selector', nodeSelectRouter);
 app.use('/csv-to-db', getCoordsToFile);
 app.use('/post-new-node', addNode);
 app.use('/find-node', findNode);
+app.use('/dev-end', devEnd);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

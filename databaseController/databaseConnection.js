@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const express = require('express');
 const {formatQueryReturnHTML} = require("../routes/formatQuery");
+const Node = require('../dataTypes/nodeStruct');
 const router = express.Router();
 const con = mysql.createConnection({
     host: `${process.env.DB_HOST}`,
@@ -25,10 +26,13 @@ exports.testCon = function(){
 };
 
 
-exports.getNodeFromNeighborID = function(node_id, res){
-    con.query(`SELECT * FROM t_nodes WHERE NEIGHBORHOOD_ID = "${node_id}" ;`, function (err, result) {
-        if (err) throw err;
-        res.send(JSON.stringify(result));
+exports.getNodeFromNeighborID = function(node_id){
+    return new Promise(function(fulfill, reject) {
+        con.query(`SELECT * FROM t_nodes WHERE NEIGHBORHOOD_ID = "${node_id}" ;`, function (err, result) {
+            if (err) throw err;
+            let node = new Node(result[0]);
+            fulfill(node);
+        });
     });
 };
 
@@ -68,12 +72,14 @@ exports.findNearestNode = async function(x,y, res, addr){
 
 
 
-exports.addNodeToDatabase = function(node, options){
+exports.addNodeToDatabase = function(node){
+    return new Promise(function(fulfill, reject){
     con.query(`INSERT INTO t_nodes (NEIGHBORHOOD_ID, NODE_NAME, PRIMARY_CONTACT, ADDRESS, PHONE, EMAIL, X_COORD, Y_COORD) SELECT "${node.neighborhood_id}", "${node.node_name}", "${node.primary_contact}", "${node.address}", "${node.phone}", "${node.email}", "${node.x_coord}", "${node.y_coord}" FROM dual WHERE NOT EXISTS(SELECT 1 FROM t_nodes WHERE NEIGHBORHOOD_ID = "${node.neighborhood_id}");`, function (err, result) {
         if (err) throw err;
         //console.log(`Added ${node.neighborhood_id} to db`);
-        if(options.res) options.res.send(`Added ${node.neighborhood_id} to db`);
+        return fulfill();
         //console.log("Result: " + result);
+    });
     });
 };
 
@@ -93,4 +99,18 @@ exports.deleteNodeByID = function(neighborhood_id, res){
         //console.log(result);
         res.send(Response.ok);
     })
+};
+
+
+exports.getCoordsByID = function(neighborhood_id){
+
+    return new Promise(function(fulfill, reject){
+        con.query(`SELECT X_COORD, Y_COORD FROM t_nodes WHERE NEIGHBORHOOD_ID = '${neighborhood_id}'`, function(err, result){
+            if(err) reject(err);
+            let node = new Node(result[0]);
+            fulfill(node);
+        });
+    });
+
+
 };
